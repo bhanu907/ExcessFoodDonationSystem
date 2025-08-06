@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://projectbackend-xhsa.onrender.com/api/auth/login', {
+      const response = await axios.post('https://project-backend-02lh.onrender.com/api/auth/login', {
         email,
         password,
       });
