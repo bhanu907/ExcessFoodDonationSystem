@@ -1,59 +1,16 @@
-// vercel.json       
+// vercel.json
 {
-      "version": 2,
-      "builds": [
-        {
-          "src": "./index.js",
-          "use": "@vercel/node"
-        }
-      ],
-      "routes": [
-        {
-          "src": "/(.*)",
-          "dest": "/"
-        }
-      ],
-      "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
     }
-
-//index.js
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
-
-const app = express();
-
-const PORT = process.env.PORT || 3000;
-require("dotenv").config();
-
-let corsOptions = {
-  origin: ["http://localhost:3000", "https://humanscape-team5a.netlify.app"],
-};
-
-app.use(cors(corsOptions));
-
-app.get("/", (req, res) => {
-  const textQuery = req.query.searchText;
-  const numOfRowsQuery = req.query.numOfRows;
-
-  axios
-    .get(
-      "http://apis.data.go.kr/B551182/diseaseInfoService/getDissNameCodeList",
-      {
-        params: {
-          sickType: 1,
-          medTp: 2,
-          diseaseType: "SICK_NM",
-          searchText: textQuery,
-          ServiceKey: process.env.KEY,
-          numOfRows: numOfRowsQuery,
-          _type: "json",
-        },
-      }
-    )
-    .then(response => res.send(response.data));
-});
-
-app.listen(PORT, () => {
-  console.log(Server running on ${PORT});
-});
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    }
+  ]
+}
